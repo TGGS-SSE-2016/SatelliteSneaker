@@ -41,7 +41,7 @@ class satellite(spaceObject):
     def getTLE(self,id):
         return None
 
-    def getALT(self, id, date):
+    def getALT(self, id):
         satelligeInfo = self.saveSatellite[id]
         self.home.date = datetime.utcnow()
         satelligeInfo['body'].compute(home)
