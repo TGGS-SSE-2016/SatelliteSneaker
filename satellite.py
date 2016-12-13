@@ -21,7 +21,7 @@ try:
 except NameError:
     pass
 
-class satellite(spaceObject):
+class satellite():
 
     #Constructor
     def __init__(self):
@@ -56,7 +56,7 @@ class satellite(spaceObject):
     def setTLE(self, newTLE=None):
         self.saveSatellite =  self.processTLEdata(self.tleSource)
 
-    def readTLEFile(source):
+    def readTLEFile(self, source):
         ''' Read a TLE file (unzip if necessary) '''
         sourceName = source['name']
         sourceFile = source['file']
@@ -70,7 +70,7 @@ class satellite(spaceObject):
 
         return tempContent
 
-    def processTLEdata(tleSource):
+    def processTLEdata(self, tleSource):
         ''' Process each TLE entry '''
         sats = []
         for source in tleSource:

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-from planet import * 
+from planet import *
 
 class sun(planet):
-    
+
     #Class Variable
     #Sun detailed
     sunDiameter = 139140 #original 1391400
@@ -20,35 +20,35 @@ class sun(planet):
         self.sunAroundSelfTheta = 0
         self.textureID = 0
         self.radiusDraw = 0
-        
+
         self.quad = gluNewQuadric()
         gluQuadricDrawStyle(self.quad, GLU_FILL) #GLU_FILL , GLU_LINE , GLU_SILHOUETTE , and GLU_POINT
         gluQuadricNormals(self.quad, self.getSurfaceType()) #GLU_NONE , GLU_FLAT , and GLU_SMOOTH
         gluQuadricTexture(self.quad, GL_TRUE)
-        
+
     #Getter Method
     def getDiameter(self):
         return sun.sunDiameter
-        
+
     def getAroundSelfTheta(self):
         return self.sunAroundSelfTheta
-        
+
     def getTextureID(self):
         return self.textureID
-        
+
     def getRadiusDraw(self):
         return self.radiusDraw
-        
+
     #Setter Method
     def setAroundSelfTheta(self, newTheta):
         self.sunAroundSelfTheta = newTheta
-    
+
     def setTextureID(self, newID):
         self.textureID = newID
-        
+
     def setRadiusDraw(self, radius):
         self.radiusDraw = radius
-        
+
     #Draw Sun
     def draw(self):
         #Sun
@@ -61,4 +61,3 @@ class sun(planet):
         gluSphere(self.quad, self.radiusDraw, sun.quadSlice, sun.quadStack)
         glDisable(GL_TEXTURE_2D)
         glPopMatrix()
-    
