@@ -66,7 +66,7 @@ class solarSystem:
     
     #Calculate Method
     def calculateEarth(self):
-        self.earthSunTheta = (self.earthSunTheta - self.earthSunThetaStep) % 360
+        self.earthSunTheta = (self.earthSunTheta + self.earthSunThetaStep) % 360
         self.earth.setAroundSelfTheta((self.earth.getAroundSelfTheta() + self.earthAroundSelfThetaStep) % 360)
         sunPosition = self.sun.getPosition()
         self.earth.setPosition(int(sunPosition[0] + (self.earthToSunDraw * math.cos(self.earthSunTheta * math.pi / 180))), int(sunPosition[1] + (self.earthToSunDraw * math.sin(self.earthSunTheta * math.pi / 180))), 0)

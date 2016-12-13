@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from solarSystem import *
+from spaceCamera import *
 import pygame
 from OpenGL.GL import *
 from OpenGL.GLUT import *
@@ -13,88 +14,177 @@ height = displayInfo.current_h
 running = True
 clock = pygame.time.Clock()
 FPS = 60
-frame_per_day = 10
-
+cameraXZMaxTheta = 89
+cameraXZMinTheta = -89
+maxCameraMode = 3 #0-2
 screen = pygame.display.set_mode((width, height), pygame.FULLSCREEN|pygame.DOUBLEBUF|pygame.OPENGL)    #setup screen to fullscreen mode
 
-#Solar System init
-mySolarSystem = solarSystem(height, 1)
+#Solar System initialize
+mySolarSystem = solarSystem(height, 10) #Screen Reference, Frame per day
 
 #texture variable
-sun_surf = pygame.image.load(mySolarSystem.getSun().getTextureFile())
-sun_image = pygame.image.tostring(sun_surf, "RGB", 1) # Flip image for OpenGL. See pygame doc.
-earth_surf = pygame.image.load(mySolarSystem.getEarth().getTextureFile())
-earth_image = pygame.image.tostring(earth_surf, "RGB", 1) # Flip image for OpenGL. See pygame doc.
-moon_surf = pygame.image.load(mySolarSystem.getMoon().getTextureFile())
-moon_image = pygame.image.tostring(moon_surf, "RGB", 1) # Flip image for OpenGL. See pygame doc.
+sunSurf = pygame.image.load(mySolarSystem.getSun().getTextureFile())
+sunImage = pygame.image.tostring(sunSurf, "RGB", 1) # Flip image for OpenGL. See pygame doc.
+earthSurf = pygame.image.load(mySolarSystem.getEarth().getTextureFile())
+earthImage = pygame.image.tostring(earthSurf, "RGB", 1) # Flip image for OpenGL. See pygame doc.
+moonSurf = pygame.image.load(mySolarSystem.getMoon().getTextureFile())
+moonImage = pygame.image.tostring(moonSurf, "RGB", 1) # Flip image for OpenGL. See pygame doc.
 
 # Defining texture
-all_texture = glGenTextures(3)
+allTexture = glGenTextures(3)
 
 #Sun texture
-glBindTexture(GL_TEXTURE_2D, all_texture[0])
+glBindTexture(GL_TEXTURE_2D, allTexture[0])
 glTexImage2D(GL_TEXTURE_2D,
                        0,   # level
                        3,   # components (3 for RGB)
-                       sun_surf.get_width(),  # width
-                       sun_surf.get_height(),  # height
+                       sunSurf.get_width(),  # width
+                       sunSurf.get_height(),  # height
                        0,   #border
                        GL_RGB, # format
                        GL_UNSIGNED_BYTE,  # type
-                       sun_image)
+                       sunImage)
 glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST) # GL_LINEAR
 glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
 
 #Earth texture
-glBindTexture(GL_TEXTURE_2D, all_texture[1])
+glBindTexture(GL_TEXTURE_2D, allTexture[1])
 glTexImage2D(GL_TEXTURE_2D,
                        0,   # level
                        3,   # components (3 for RGB)
-                       earth_surf.get_width(),  # width
-                       earth_surf.get_height(),  # height
+                       earthSurf.get_width(),  # width
+                       earthSurf.get_height(),  # height
                        0,   #border
                        GL_RGB, # format
                        GL_UNSIGNED_BYTE,  # type
-                       earth_image)
+                       earthImage)
 glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST) # GL_LINEAR
 glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
 
 #Moon texture
-glBindTexture(GL_TEXTURE_2D, all_texture[2])
+glBindTexture(GL_TEXTURE_2D, allTexture[2])
 glTexImage2D(GL_TEXTURE_2D,
                        0,   # level
                        3,   # components (3 for RGB)
-                       moon_surf.get_width(),  # width
-                       moon_surf.get_height(),  # height
+                       moonSurf.get_width(),  # width
+                       moonSurf.get_height(),  # height
                        0,   #border
                        GL_RGB, # format
                        GL_UNSIGNED_BYTE,  # type
-                       moon_image)
+                       moonImage)
 glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST) # GL_LINEAR
 glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
 
-mySolarSystem.getSun().setTextureID(all_texture[0])
-mySolarSystem.getEarth().setTextureID(all_texture[1])
-mySolarSystem.getMoon().setTextureID(all_texture[2])
+mySolarSystem.getSun().setTextureID(allTexture[0])
+mySolarSystem.getEarth().setTextureID(allTexture[1])
+mySolarSystem.getMoon().setTextureID(allTexture[2])
 
-eye_camera = [0, height, 0]
-center_camera = [0, 0, 0]
-up_camera = [0, 0, 1]
+#Camera Setting
+allSpaceObject = [mySolarSystem.getSun(), mySolarSystem.getEarth(), mySolarSystem.getMoon()]
+cameraObject = spaceCamera(60, (width/height), 1, height*1.5, height, 0, allSpaceObject)
 
-gluPerspective(60, (width/height), 1, height*1.5)
-glDepthFunc(GL_LEQUAL) # LEQUAL
-glEnable(GL_DEPTH_TEST)
-glTranslatef(0.0,0.0, 0.0)
-gluLookAt(eye_camera[0], eye_camera[1], eye_camera[2], center_camera[0], center_camera[0], center_camera[0], up_camera[0], up_camera[1], up_camera[2])
-
+#Keyboard Handler
+def keyboardHandler(mode):
+    global cameraObject, cameraXZMaxTheta, cameraXZMinTheta, allSpaceObject, mySolarSystem
+    cameraMode = cameraObject.getCameraMode()
+    selectedObject = cameraObject.getSelectedObject()
+    if mode == 0:
+        if cameraMode == 0:
+            if cameraObject.getCameraXZTheta() < cameraXZMaxTheta:
+                cameraObject.setCameraXZTheta(cameraObject.getCameraXZTheta() + 1)
+        elif cameraMode == 1:
+            print("Do something")
+    elif mode == 1:
+        if cameraMode == 0:
+            if cameraObject.getCameraXZTheta() > cameraXZMinTheta:
+                cameraObject.setCameraXZTheta(cameraObject.getCameraXZTheta() - 1)
+        elif cameraMode == 1:
+            print("Do something")
+    elif mode == 2:
+        if cameraMode == 0:
+            cameraObject.setCameraXYTheta((cameraObject.getCameraXYTheta() - 1) % 360)
+        elif cameraMode == 1:
+            print("Do something")
+    elif mode == 3:
+        if cameraMode == 0:
+            cameraObject.setCameraXYTheta((cameraObject.getCameraXYTheta() + 1) % 360)
+        elif cameraMode == 1:
+            print("Do something")
+    elif mode == 4:
+        cameraObject.setCameraMode((cameraMode + 1) % maxCameraMode)
+    elif mode == 5:
+        cameraObject.setCameraMode((cameraMode - 1) % maxCameraMode)
+    elif mode == 6:
+        cameraObject.setSelectedObject((cameraObject.getSelectedObject() + 1) % len(allSpaceObject))
+    elif mode == 7:
+        cameraObject.setSelectedObject((cameraObject.getSelectedObject() - 1) % len(allSpaceObject))
+    elif mode == 8:
+        cameraObject.setCameraDistance(cameraObject.getCameraDistance() - 1)
+    elif mode == 9:
+        if cameraObject.getCameraDistance() > 0:
+            cameraObject.setCameraDistance(cameraObject.getCameraDistance() + 1)
+    elif mode == 10:
+        mySolarSystem.setFramePerDay(mySolarSystem.getFramePerDay() + 1)
+    elif mode == 11:
+        if mySolarSystem.getFramePerDay() > 1:
+            mySolarSystem.setFramePerDay(mySolarSystem.getFramePerDay() - 1)
+        
+    
+#Key Definition
+#Up Arrow Camera go Up
+#Down Arrow Camera go Down
+#Left Arrow Camera go Left
+#Right Arrow Camera go Down
+#1 Next Camera view
+#2 Previous Camera view
+#3 Next Object
+#4 Previous Object
+#Z Camera zoom In
+#X Camera zoom Out
+#A Increase Frame per day
+#S Decrease Frame Per day
+#Q Time step Foward
+#W Time step Backward
 #Event watch dog
 while running:
     clock.tick(FPS)
+    
+    pressed = pygame.key.get_pressed()
+    if pressed[pygame.K_UP]:
+        keyboardHandler(0)
+    if pressed[pygame.K_DOWN]:
+        keyboardHandler(1)
+    if pressed[pygame.K_LEFT]:
+        keyboardHandler(2)
+    if pressed[pygame.K_RIGHT]:
+        keyboardHandler(3)
+    if pressed[pygame.K_z]:
+        keyboardHandler(8)
+    if pressed[pygame.K_x]:
+        keyboardHandler(9)
+    if pressed[pygame.K_a]:
+        keyboardHandler(10)
+    if pressed[pygame.K_s]:
+        keyboardHandler(11)
+    if pressed[pygame.K_q]:
+        keyboardHandler(12)
+    if pressed[pygame.K_w]:
+        keyboardHandler(13)
+            
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
+    cameraObject.updateCameraPosition()
     mySolarSystem.updateSolarSystem()
     pygame.display.flip()
     for event in pygame.event.get():
         #check event to do something with program
+        if pressed[pygame.K_1]:
+            keyboardHandler(4)
+        if pressed[pygame.K_2]:
+            keyboardHandler(5)
+        if pressed[pygame.K_3]:
+            keyboardHandler(6)
+        if pressed[pygame.K_4]:
+            keyboardHandler(7)
         if event.type == pygame.QUIT:
             running = False
             pygame.quit()
