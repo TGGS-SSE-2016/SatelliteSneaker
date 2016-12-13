@@ -55,6 +55,7 @@ class sun(planet):
         sunPosition = self.getPosition()
         glPushMatrix()
         glEnable(GL_TEXTURE_2D)
+        glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, (0.4,0.4,0.4));
         glBindTexture(GL_TEXTURE_2D, self.textureID)
         glTranslatef(sunPosition[0], sunPosition[1], sunPosition[2])
         glRotate(self.sunAroundSelfTheta, 0, 0, 1)
