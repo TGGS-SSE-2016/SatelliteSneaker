@@ -18,10 +18,12 @@ class iss(spaceObject):
         gluQuadricNormals(self.quad, self.getSurfaceType()) #GLU_NONE , GLU_FLAT , and GLU_SMOOTH
 
     def draw(self):
+        glPushMatrix()
         issPosition = self.getPosition()
         glTranslatef(issPosition[0], issPosition[1], issPosition[2])
         self.makeISS()
         glColor3f(1,1,1)
+        glPopMatrix()
 
     def makeISS(self):
         self.makeBody()
