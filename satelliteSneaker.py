@@ -108,7 +108,7 @@ glEnable(GL_LIGHTING)
 
 #Camera Setting
 allSpaceObject = [mySolarSystem.getSun(), mySolarSystem.getEarth(), mySolarSystem.getMoon()]
-cameraObject = spaceCamera(60, (width/height), 1, height*1.5, height, 0, allSpaceObject)
+cameraObject = spaceCamera(60, (width/height), 1, height*2, height, 0, allSpaceObject)
 
 #Keyboard Handler
 def keyboardHandler(mode):
