@@ -4,6 +4,7 @@ from earth import *
 from sun import *
 from moon import *
 from iss import *
+from orbitalPath import *
 
 class solarSystem:
 
@@ -44,6 +45,8 @@ class solarSystem:
         self.earth.setRadiusDraw(self.earthRadiusDraw)
         self.sun.setRadiusDraw(self.sunRadiusDraw)
         self.moon.setRadiusDraw(self.moonRadiusDraw)
+        self.earthOrbitalPath = orbitalPath(self.sun, self.earthToSunDraw, (0, 0, 255))
+        self.moonOrbitalPath = orbitalPath(self.earth, self.earthToMoonDraw, (255, 255, 0))
 
     #Getter Method
     def getFramePerDay(self):
@@ -92,3 +95,5 @@ class solarSystem:
         self.earth.draw()
         self.moon.draw()
         self.iss.draw()
+        self.earthOrbitalPath.draw()
+        self.moonOrbitalPath.draw()

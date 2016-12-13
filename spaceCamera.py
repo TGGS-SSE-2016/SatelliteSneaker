@@ -26,13 +26,16 @@ class spaceCamera:
         self.cameraXYTheta = 0
         self.cameraXZTheta = 0
         
+        glLoadIdentity()
         gluPerspective(self.viewAngle, self.aspectRatio, self.zNear, self.zFar)
         glDepthFunc(GL_LEQUAL) # LEQUAL
         glEnable(GL_DEPTH_TEST)
         glTranslatef(0.0, 0.0, 0.0)
+        glPushMatrix()
         gluLookAt(self.eyeCamera[0], self.eyeCamera[1], self.eyeCamera[2], 
                 self.centerCamera[0], self.centerCamera[1], self.centerCamera[2], 
                 self.upCamera[0], self.upCamera[1], self.upCamera[2])
+        glPopMatrix()
 
 
     #Getter Method
@@ -119,9 +122,6 @@ class spaceCamera:
             self.centerCamera[0] = currentPosition[0]
             self.centerCamera[1] = currentPosition[1]
             self.centerCamera[2] = currentPosition[2]
-            print(self.selectedObject)
-            print(currentPosition)
-            print(self.centerCamera)
             self.eyeCamera[0] = self.centerCamera[0] + self.cameraDistance * math.cos(self.cameraXYTheta * math.pi / 180) * math.cos(self.cameraXZTheta * math.pi / 180)
             self.eyeCamera[1] = self.centerCamera[1] + self.cameraDistance * math.sin(self.cameraXYTheta * math.pi / 180) * math.cos(self.cameraXZTheta * math.pi / 180)
             self.eyeCamera[2] = self.centerCamera[2] + self.cameraDistance * math.sin(self.cameraXZTheta * math.pi / 180)
@@ -134,9 +134,11 @@ class spaceCamera:
         glLoadIdentity()
         gluPerspective(self.viewAngle, self.aspectRatio, self.zNear, self.zFar)
         glTranslatef(0.0, 0.0, 0.0)
+        #glPushMatrix()
         gluLookAt(self.eyeCamera[0], self.eyeCamera[1], self.eyeCamera[2], 
                 self.centerCamera[0], self.centerCamera[1], self.centerCamera[2], 
                 self.upCamera[0], self.upCamera[1], self.upCamera[2])
+        #glPopMatrix()
                     
                     
                     
