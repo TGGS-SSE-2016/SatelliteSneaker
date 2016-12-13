@@ -3,6 +3,7 @@ import math
 from earth import *
 from sun import *
 from moon import *
+from orbitalPath import *
 
 class solarSystem:
 
@@ -39,9 +40,13 @@ class solarSystem:
         self.earthSunTheta = 0
         self.earthMoonTheta = 0
         
+        print(self.sunRadiusDraw)
+        
         self.earth.setRadiusDraw(self.earthRadiusDraw)
         self.sun.setRadiusDraw(self.sunRadiusDraw)
         self.moon.setRadiusDraw(self.moonRadiusDraw)
+        self.earthOrbitalPath = orbitalPath(self.sun, self.earthToSunDraw, (0, 0, 255))
+        self.moonOrbitalPath = orbitalPath(self.earth, self.earthToMoonDraw, (255, 255, 0))
         
     #Getter Method
     def getFramePerDay(self):
@@ -89,6 +94,8 @@ class solarSystem:
         self.sun.draw()
         self.earth.draw()
         self.moon.draw()
+        self.earthOrbitalPath.draw()
+        self.moonOrbitalPath.draw()
     
     
         
