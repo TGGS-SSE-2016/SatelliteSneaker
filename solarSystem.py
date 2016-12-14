@@ -4,6 +4,7 @@ from earth import *
 from sun import *
 from moon import *
 from iss import *
+from theos import *
 from orbitalPath import *
 from textScreen import *
 from satellite import *
@@ -32,6 +33,7 @@ class solarSystem:
         self.moon = moon(frameDay)
         self.earth = earth(frameDay)
         self.iss = iss()
+        self.theos = theos()
         self.usageDistance = (self.moon.getDiameter() * 2) + (solarSystem.earthToSun * 2) + (solarSystem.earthToMoon * 2)
 
         self.drawDistanceScaleUnit = self.referenceScreen / self.usageDistance
@@ -56,7 +58,7 @@ class solarSystem:
         self.sunText = textScreen(self.sun.getPosition(), "Sun", solarSystem.textColor, int((self.referenceScreen*30/1080)*100/69), self.sunRadiusDraw)
         self.earthText = textScreen(self.earth.getPosition(), "Earth", solarSystem.textColor, int((self.referenceScreen*20/1080)*100/69), self.earthRadiusDraw)
         self.moonText = textScreen(self.moon.getPosition(), "Moon", solarSystem.textColor, int((self.referenceScreen*10/1080)*100/69), self.moonRadiusDraw)
-        
+
         self.thaicomSat = thaicom(self.drawDistanceScaleUnit)
         self.thaicomSat.setDrawScale(self.drawDistanceScaleUnit)
         #self.testSat = satellite()
@@ -85,10 +87,10 @@ class solarSystem:
         self.earthMoonThetaStep = 360 / (solarSystem.moonAroundEarthDay * self.framePerDay)
         self.sunAroundSelfThetaStep = 360 / (solarSystem.sunAroundItSelfDay * self.framePerDay)
         self.earthAroundSelfThetaStep = 360 / (solarSystem.earthAroundItSelfDay * self.framePerDay)
-        
+
     def toggleOribitalPath(self):
         self.showOrbitalPath = not self.showOrbitalPath
-        
+
     def toggleName(self):
         self.showName = not self.showName
 
@@ -108,7 +110,7 @@ class solarSystem:
 
     def calculateSun(self):
         self.sun.setAroundSelfTheta((self.sun.getAroundSelfTheta() + self.sunAroundSelfThetaStep) % 360)
-        
+
 
     def updateSolarSystem(self):
         self.calculateSun()
@@ -119,11 +121,12 @@ class solarSystem:
         self.earth.draw()
         self.moon.draw()
         self.iss.draw()
-        
+        self.theos.draw()
+
         if self.showOrbitalPath == True:
             self.earthOrbitalPath.draw()
             self.moonOrbitalPath.draw()
-            
+
         if self.showName == True:
             self.sunText.setDrawPosition(self.sun.getPosition())
             self.sunText.draw()
@@ -131,13 +134,12 @@ class solarSystem:
             self.earthText.draw()
             self.moonText.setDrawPosition(self.moon.getPosition())
             self.moonText.draw()
-        
+
         thaicomPosition = self.thaicomSat.convertToXYZ(self.thaicomSat.getALT(0), self.earth.getPosition())
         self.thaicomSat.setPosition(thaicomPosition[0], thaicomPosition[1], thaicomPosition[2])
         self.thaicomSat.draw()
-        
+
         #print("XYZ Satellite--------")
         #print(self.testSat.convertToXYZ(self.testSat.getALT(0), self.earth.getPosition()))
         #print("XYZ Earth------------")
         #print(self.earth.getPosition())
-        
