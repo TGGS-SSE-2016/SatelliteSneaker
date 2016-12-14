@@ -5,6 +5,7 @@ from sun import *
 from moon import *
 from iss import *
 from orbitalPath import *
+from textScreen import *
 
 class solarSystem:
 
@@ -16,6 +17,7 @@ class solarSystem:
     moonAroundEarthDay = 27
     sunAroundItSelfDay = 30
     earthAroundItSelfDay = 1
+    textColor = (255,255,255)
 
     #Calculate Variable
 
@@ -47,6 +49,9 @@ class solarSystem:
         self.moon.setRadiusDraw(self.moonRadiusDraw)
         self.earthOrbitalPath = orbitalPath(self.sun, self.earthToSunDraw, (0, 0, 255))
         self.moonOrbitalPath = orbitalPath(self.earth, self.earthToMoonDraw, (255, 255, 0))
+        self.sunText = textScreen(self.sun.getPosition(), "Sun", solarSystem.textColor, int((self.referenceScreen*30/1080)*100/69), self.sunRadiusDraw)
+        self.earthText = textScreen(self.earth.getPosition(), "Earth", solarSystem.textColor, int((self.referenceScreen*20/1080)*100/69), self.earthRadiusDraw)
+        self.moonText = textScreen(self.moon.getPosition(), "Moon", solarSystem.textColor, int((self.referenceScreen*10/1080)*100/69), self.moonRadiusDraw)
 
     #Getter Method
     def getFramePerDay(self):
@@ -97,3 +102,9 @@ class solarSystem:
         self.iss.draw()
         self.earthOrbitalPath.draw()
         self.moonOrbitalPath.draw()
+        self.sunText.setDrawPosition(self.sun.getPosition())
+        self.sunText.draw()
+        self.earthText.setDrawPosition(self.earth.getPosition())
+        self.earthText.draw()
+        self.moonText.setDrawPosition(self.moon.getPosition())
+        self.moonText.draw()

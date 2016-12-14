@@ -31,11 +31,9 @@ class spaceCamera:
         glDepthFunc(GL_LEQUAL) # LEQUAL
         glEnable(GL_DEPTH_TEST)
         glTranslatef(0.0, 0.0, 0.0)
-        glPushMatrix()
         gluLookAt(self.eyeCamera[0], self.eyeCamera[1], self.eyeCamera[2], 
                 self.centerCamera[0], self.centerCamera[1], self.centerCamera[2], 
                 self.upCamera[0], self.upCamera[1], self.upCamera[2])
-        glPopMatrix()
 
 
     #Getter Method
@@ -134,11 +132,9 @@ class spaceCamera:
         glLoadIdentity()
         gluPerspective(self.viewAngle, self.aspectRatio, self.zNear, self.zFar)
         glTranslatef(0.0, 0.0, 0.0)
-        #glPushMatrix()
         gluLookAt(self.eyeCamera[0], self.eyeCamera[1], self.eyeCamera[2], 
                 self.centerCamera[0], self.centerCamera[1], self.centerCamera[2], 
                 self.upCamera[0], self.upCamera[1], self.upCamera[2])
-        #glPopMatrix()
                     
                     
                     

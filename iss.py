@@ -30,10 +30,12 @@ class iss(spaceObject):
         gluQuadricTexture(self.quad, GL_TRUE)
 
     def draw(self):
+        glPushMatrix()
         issPosition = self.getPosition()
         glTranslatef(issPosition[0], issPosition[1], issPosition[2])
         self.makeISS()
         glColor3f(1,1,1)
+        glPopMatrix()
 
     def makeISS(self):
         self.makeBody()

@@ -81,32 +81,22 @@ mySolarSystem.getSun().setTextureID(allTexture[0])
 mySolarSystem.getEarth().setTextureID(allTexture[1])
 mySolarSystem.getMoon().setTextureID(allTexture[2])
 
-#Camera Setting
-allSpaceObject = [mySolarSystem.getSun(), mySolarSystem.getEarth(), mySolarSystem.getMoon()]
-cameraObject = spaceCamera(60, (width/height), 1, height*1.5, height, 0, allSpaceObject)
-
 # light setup
 light_position = [0.0, 0.0, 0.0, 1.0]
 light_ambient = [0.0, 0.0, 0.0, 1.0]
 light_diffuse = [height*2, height*2, height*2, height*2]
 light_specular = [1.0, 1.0, 1.0, 1.0]
 
-# light1 setup
-light_position1 = [0.0, 0.0, 0.0, 0.0]
-light_ambient1 = [0.4, 0.4, 0.4, 1.0]
-light_diffuse1 = [1.0, 1.0, 1.0, 1.0]
-light_specular1 = [1.0, 1.0, 1.0, 1.0]
-
 # material setup
 mat_diffuse = [1.0, 1.0, 1.0, 1.0]
 mat_ambient = [1.0, 1.0, 1.0, 1.0]
 mat_specular = [1.0, 1.0, 1.0, 1.0]
-mat_shininess = [1.0]
+mat_shininess = [100.0]
 glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_diffuse)
 glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular)
 glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess)
 
-# light0 setup
+# light setup
 glLightfv(GL_LIGHT0, GL_POSITION, light_position)
 glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient)
 glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse)
@@ -116,17 +106,11 @@ glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 0.5)
 glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, 0.25)
 glEnable(GL_LIGHT0)
 
-# light1 setup
-glLightfv(GL_LIGHT1, GL_POSITION, light_position1)
-glLightfv(GL_LIGHT1, GL_AMBIENT, light_ambient1)
-glLightfv(GL_LIGHT1, GL_DIFFUSE, light_diffuse1)
-glLightfv(GL_LIGHT1, GL_SPECULAR, light_specular1)
-glLightf(GL_LIGHT1, GL_CONSTANT_ATTENUATION, 0.5)
-glLightf(GL_LIGHT1, GL_LINEAR_ATTENUATION, 0.5)
-glLightf(GL_LIGHT1, GL_QUADRATIC_ATTENUATION, 0.25)
-glEnable(GL_LIGHT1)
-
 glEnable(GL_LIGHTING)
+
+#Camera Setting
+allSpaceObject = [mySolarSystem.getSun(), mySolarSystem.getEarth(), mySolarSystem.getMoon()]
+cameraObject = spaceCamera(60, (width/height), 1, height*2, height, 0, allSpaceObject)
 
 #Keyboard Handler
 def keyboardHandler(mode):
@@ -217,14 +201,9 @@ while running:
         keyboardHandler(13)
 
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
-    #glLoadIdentity()
-    glTranslatef(0.0, 0.0, 0.0)
-    glLightfv(GL_LIGHT0, GL_POSITION, light_position)
-    glLightfv(GL_LIGHT1, GL_POSITION, light_position1)
-    cameraObject.updateCameraPosition()
     mySolarSystem.updateSolarSystem()
-    #positionSelectedObject = cameraObject.getCenter()
-    #glLightfv(GL_LIGHT0, GL_POSITION, [light_position[0] - positionSelectedObject[0], light_position[1] - positionSelectedObject[1], light_position[2] - positionSelectedObject[2], light_position[3]])
+    cameraObject.updateCameraPosition()
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position)
     glFlush()
     pygame.display.flip()
     for event in pygame.event.get():
