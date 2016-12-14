@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import sys
 from solarSystem import *
 from spaceCamera import *
 import pygame
@@ -7,6 +8,7 @@ from OpenGL.GLUT import *
 from OpenGL.GLU import *
 
 #initialize and calculate some variable setup
+glutInit(sys.argv)
 pygame.init()
 displayInfo = pygame.display.Info() #get resolution size of screen
 width = displayInfo.current_w
@@ -171,8 +173,8 @@ def keyboardHandler(mode):
     elif mode == 11:
         if mySolarSystem.getFramePerDay() > 1:
             mySolarSystem.setFramePerDay(mySolarSystem.getFramePerDay() - 1)
-        
-    
+
+
 #Key Definition
 #Up Arrow Camera go Up
 #Down Arrow Camera go Down
@@ -191,7 +193,7 @@ def keyboardHandler(mode):
 #Event watch dog
 while running:
     clock.tick(FPS)
-    
+
     pressed = pygame.key.get_pressed()
     if pressed[pygame.K_UP]:
         keyboardHandler(0)
@@ -213,7 +215,7 @@ while running:
         keyboardHandler(12)
     if pressed[pygame.K_w]:
         keyboardHandler(13)
-            
+
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
     #glLoadIdentity()
     glTranslatef(0.0, 0.0, 0.0)
@@ -242,8 +244,3 @@ while running:
             if event.key == pygame.K_ESCAPE:
                 running = False
                 pygame.quit()
-
-
-
-
-

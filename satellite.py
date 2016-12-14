@@ -11,6 +11,8 @@ import matplotlib.pyplot as plt
 import zipfile
 import geocoder
 
+from spaceObject import *
+
 try:
     from urllib.request import URLopener
 except ImportError:
@@ -21,11 +23,11 @@ try:
 except NameError:
     pass
 
-class satellite():
+class satellite(spaceObject):
 
     #Constructor
     def __init__(self):
-        super(satellite, self).__init__()
+        super(satellite, self).__init__()        
         self.tleSource = [
                             {
                              'name':  'Default',
@@ -37,7 +39,6 @@ class satellite():
         self.longtitude = 0
         self.home = ephem.Observer()
 
-    #Getter Method
     def getTLE(self,id):
         return None
 
