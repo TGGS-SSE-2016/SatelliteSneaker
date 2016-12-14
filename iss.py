@@ -315,7 +315,7 @@ class iss(satellite):
         stackSolar = 4
         bodyToSolarPanel = 40
         glPushMatrix()
-        glTranslatef(self.heightBody//3,self.heightBody//2 ,(self.heightBody//2+outterSolar))
+        glTranslatef(self.heightBody//3,self.heightBody//2 ,(self.heightBody//2+outterSolar)-self.radiusBody-outterSolar-30)
         glScalef(1,1,1);
         glRotate(90, 0, 0, 1)
         glRotate(90, 1, 0, 0)
@@ -344,8 +344,10 @@ class iss(satellite):
         stackSolar = 4
         bodyToSolarPanel = 40
         glPushMatrix()
-        glTranslatef(self.radiusBody,self.heightBody//2 ,self.heightBody//2)
+        glTranslatef(self.heightBody//3-10,self.heightBody//2 ,self.heightBody//2+outterSolar)
         glScalef(1,1,1);
+        glRotate(90, 0, 0, 1)
+        glRotate(90, 1, 0, 0)
         glRotate(45, 0, 0, 1)
         glEnable(GL_TEXTURE_2D)
         textureID = glGenTextures(1)
@@ -371,8 +373,10 @@ class iss(satellite):
         stackSolar = 4
         bodyToSolarPanel = 40
         glPushMatrix()
-        glTranslatef(self.radiusBody,self.heightBody//2 ,self.heightBody//2)
+        glTranslatef(self.heightBody//3-10,self.heightBody//2 ,(self.heightBody//2+outterSolar)-self.radiusBody-outterSolar-30)
         glScalef(1,1,1);
+        glRotate(90, 0, 0, 1)
+        glRotate(90, 1, 0, 0)
         glRotate(45, 0, 0, 1)
         glEnable(GL_TEXTURE_2D)
         textureID = glGenTextures(1)
