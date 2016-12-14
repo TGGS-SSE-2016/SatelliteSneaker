@@ -27,7 +27,7 @@ class satellite(spaceObject):
 
     #Class Variable
     #Satellite variable
-    distanceFromEarth = 3578 #original 35780
+    distanceFromEarth = 3578 + (38440/2) #original 35780
 
     #Constructor
     def __init__(self):

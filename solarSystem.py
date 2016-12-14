@@ -7,6 +7,7 @@ from iss import *
 from orbitalPath import *
 from textScreen import *
 from satellite import *
+from thaicom import *
 
 class solarSystem:
 
@@ -56,6 +57,8 @@ class solarSystem:
         self.earthText = textScreen(self.earth.getPosition(), "Earth", solarSystem.textColor, int((self.referenceScreen*20/1080)*100/69), self.earthRadiusDraw)
         self.moonText = textScreen(self.moon.getPosition(), "Moon", solarSystem.textColor, int((self.referenceScreen*10/1080)*100/69), self.moonRadiusDraw)
         
+        self.thaicomSat = thaicom(self.drawDistanceScaleUnit)
+        self.thaicomSat.setDrawScale(self.drawDistanceScaleUnit)
         #self.testSat = satellite()
         #self.testSat.setDrawScale(self.drawDistanceScaleUnit)
 
@@ -71,6 +74,9 @@ class solarSystem:
 
     def getMoon(self):
         return self.moon
+        
+    def getThaicom(self):
+        return self.thaicomSat
 
     #Setter Method
     def setFramePerDay(self, frameDay):
@@ -125,6 +131,10 @@ class solarSystem:
             self.earthText.draw()
             self.moonText.setDrawPosition(self.moon.getPosition())
             self.moonText.draw()
+        
+        thaicomPosition = self.thaicomSat.convertToXYZ(self.thaicomSat.getALT(0), self.earth.getPosition())
+        self.thaicomSat.setPosition(thaicomPosition[0], thaicomPosition[1], thaicomPosition[2])
+        self.thaicomSat.draw()
         
         #print("XYZ Satellite--------")
         #print(self.testSat.convertToXYZ(self.testSat.getALT(0), self.earth.getPosition()))
