@@ -15,14 +15,22 @@ class iss(satellite):
         self.radiusBody = 10
         self.quadSlice = 5
         self.quadStack = 5
-        self.spaceshipTexture = "spaceshipmap.jpg"
+        self.spaceshipTexture1 = "spaceshipmap1.jpg"
+        self.spaceshipTexture2 = "spaceshipmap2.jpg"
+        self.spaceshipTexture3 = "spaceshipmap3.jpg"
         self.solarPanelTexture = "solarpanelmap.jpg"
 
-        #texture variable
         self.solarPanelImg = pygame.image.load("texture/"+self.solarPanelTexture)
-        self.solarPanelImgString = pygame.image.tostring(self.solarPanelImg, "RGB", 1) # Flip image for OpenGL. See pygame doc.
-        self.spaceshipImg = pygame.image.load("texture/"+self.spaceshipTexture)
-        self.spaceshipImgString = pygame.image.tostring(self.spaceshipImg, "RGB", 1) # Flip image for OpenGL. See pygame doc.
+        self.solarPanelImgString = pygame.image.tostring(self.solarPanelImg, "RGB", 1)
+
+        self.spaceshipImg1 = pygame.image.load("texture/"+self.spaceshipTexture1)
+        self.spaceshipImgString1 = pygame.image.tostring(self.spaceshipImg1, "RGB", 1)
+
+        self.spaceshipImg2 = pygame.image.load("texture/"+self.spaceshipTexture2)
+        self.spaceshipImgString2 = pygame.image.tostring(self.spaceshipImg2, "RGB", 1)
+
+        self.spaceshipImg3 = pygame.image.load("texture/"+self.spaceshipTexture3)
+        self.spaceshipImgString3 = pygame.image.tostring(self.spaceshipImg3, "RGB", 1)
 
         gluQuadricDrawStyle(self.quad, GLU_FILL) #GLU_FILL , GLU_LINE , GLU_SILHOUETTE , and GLU_POINT
         gluQuadricNormals(self.quad, self.getSurfaceType()) #GLU_NONE , GLU_FLAT , and GLU_SMOOTH
@@ -45,6 +53,15 @@ class iss(satellite):
         self.makeSolarPanelRight1()
         self.makeSolarPanelLeft2()
         self.makeSolarPanelRight2()
+        self.makeSolarPanelLeft3()
+        self.makeSolarPanelRight3()
+        self.makeSolarPanelLeft4()
+        self.makeSolarPanelRight4()
+
+        self.makeSolarPanelLeft5()
+        self.makeSolarPanelRight5()
+        self.makeSolarPanelLeft6()
+        self.makeSolarPanelRight6()
 
     def makeSolarPanelLeft1(self):
         innerSolar = 0
@@ -53,7 +70,7 @@ class iss(satellite):
         stackSolar = 4
         bodyToSolarPanel = 40
         glPushMatrix()
-        glTranslatef(0,bodyToSolarPanel,self.heightBody//5)
+        glTranslatef(0,bodyToSolarPanel,0)
         glScalef(1,1,1);
         glRotate(45, 0, 0, 1)
         glEnable(GL_TEXTURE_2D)
@@ -80,7 +97,7 @@ class iss(satellite):
         stackSolar = 4
         bodyToSolarPanel = 40
         glPushMatrix()
-        glTranslatef(0,-bodyToSolarPanel,self.heightBody//5)
+        glTranslatef(0,-bodyToSolarPanel,0)
         glScalef(1,1,1);
         glRotate(45, 0, 0, 1)
         glEnable(GL_TEXTURE_2D)
@@ -107,7 +124,7 @@ class iss(satellite):
         stackSolar = 4
         bodyToSolarPanel = 40
         glPushMatrix()
-        glTranslatef(0,bodyToSolarPanel,self.heightBody//5+20)
+        glTranslatef(0,bodyToSolarPanel,20)
         glScalef(1,1,1);
         glRotate(45, 0, 0, 1)
         glEnable(GL_TEXTURE_2D)
@@ -134,7 +151,227 @@ class iss(satellite):
         stackSolar = 4
         bodyToSolarPanel = 40
         glPushMatrix()
-        glTranslatef(0,-bodyToSolarPanel,self.heightBody//5+20)
+        glTranslatef(0,-bodyToSolarPanel,20)
+        glScalef(1,1,1);
+        glRotate(45, 0, 0, 1)
+        glEnable(GL_TEXTURE_2D)
+        textureID = glGenTextures(1)
+        glBindTexture(GL_TEXTURE_2D, textureID)
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
+        glTexImage2D(GL_TEXTURE_2D,
+                        0,
+                        GL_RGB,
+                        self.solarPanelImg.get_width(),
+                        self.solarPanelImg.get_height(),
+                        0,
+                        GL_RGB,
+                        GL_UNSIGNED_BYTE,
+                        self.solarPanelImgString)
+        gluDisk(self.quad, innerSolar, outterSolar, sliceSolar, stackSolar  )
+        glDisable(GL_TEXTURE_2D)
+        glPopMatrix()
+
+    def makeSolarPanelLeft3(self):
+        innerSolar = 0
+        outterSolar = 40
+        sliceSolar = 4
+        stackSolar = 4
+        bodyToSolarPanel = 40
+        glPushMatrix()
+        glTranslatef(0,bodyToSolarPanel,self.heightBody-20)
+        glScalef(1,1,1);
+        glRotate(45, 0, 0, 1)
+        glEnable(GL_TEXTURE_2D)
+        textureID = glGenTextures(1)
+        glBindTexture(GL_TEXTURE_2D, textureID)
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
+        glTexImage2D(GL_TEXTURE_2D,
+                        0,
+                        GL_RGB,
+                        self.solarPanelImg.get_width(),
+                        self.solarPanelImg.get_height(),
+                        0,
+                        GL_RGB,
+                        GL_UNSIGNED_BYTE,
+                        self.solarPanelImgString)
+        gluDisk(self.quad, innerSolar, outterSolar, sliceSolar, stackSolar  )
+        glDisable(GL_TEXTURE_2D)
+        glPopMatrix()
+
+    def makeSolarPanelRight3(self):
+        innerSolar = 0
+        outterSolar = 40
+        sliceSolar = 4
+        stackSolar = 4
+        bodyToSolarPanel = 40
+        glPushMatrix()
+        glTranslatef(0,-bodyToSolarPanel,self.heightBody-20)
+        glScalef(1,1,1);
+        glRotate(45, 0, 0, 1)
+        glEnable(GL_TEXTURE_2D)
+        textureID = glGenTextures(1)
+        glBindTexture(GL_TEXTURE_2D, textureID)
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
+        glTexImage2D(GL_TEXTURE_2D,
+                        0,
+                        GL_RGB,
+                        self.solarPanelImg.get_width(),
+                        self.solarPanelImg.get_height(),
+                        0,
+                        GL_RGB,
+                        GL_UNSIGNED_BYTE,
+                        self.solarPanelImgString)
+        gluDisk(self.quad, innerSolar, outterSolar, sliceSolar, stackSolar  )
+        glDisable(GL_TEXTURE_2D)
+        glPopMatrix()
+
+    def makeSolarPanelLeft4(self):
+        innerSolar = 0
+        outterSolar = 40
+        sliceSolar = 4
+        stackSolar = 4
+        bodyToSolarPanel = 40
+        glPushMatrix()
+        glTranslatef(0,bodyToSolarPanel,self.heightBody)
+        glScalef(1,1,1);
+        glRotate(45, 0, 0, 1)
+        glEnable(GL_TEXTURE_2D)
+        textureID = glGenTextures(1)
+        glBindTexture(GL_TEXTURE_2D, textureID)
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
+        glTexImage2D(GL_TEXTURE_2D,
+                        0,
+                        GL_RGB,
+                        self.solarPanelImg.get_width(),
+                        self.solarPanelImg.get_height(),
+                        0,
+                        GL_RGB,
+                        GL_UNSIGNED_BYTE,
+                        self.solarPanelImgString)
+        gluDisk(self.quad, innerSolar, outterSolar, sliceSolar, stackSolar  )
+        glDisable(GL_TEXTURE_2D)
+        glPopMatrix()
+
+    def makeSolarPanelRight4(self):
+        innerSolar = 0
+        outterSolar = 40
+        sliceSolar = 4
+        stackSolar = 4
+        bodyToSolarPanel = 40
+        glPushMatrix()
+        glTranslatef(0,-bodyToSolarPanel,self.heightBody)
+        glScalef(1,1,1);
+        glRotate(45, 0, 0, 1)
+        glEnable(GL_TEXTURE_2D)
+        textureID = glGenTextures(1)
+        glBindTexture(GL_TEXTURE_2D, textureID)
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
+        glTexImage2D(GL_TEXTURE_2D,
+                        0,
+                        GL_RGB,
+                        self.solarPanelImg.get_width(),
+                        self.solarPanelImg.get_height(),
+                        0,
+                        GL_RGB,
+                        GL_UNSIGNED_BYTE,
+                        self.solarPanelImgString)
+        gluDisk(self.quad, innerSolar, outterSolar, sliceSolar, stackSolar  )
+        glDisable(GL_TEXTURE_2D)
+        glPopMatrix()
+
+    def makeSolarPanelLeft5(self):
+        innerSolar = 0
+        outterSolar = 40
+        sliceSolar = 4
+        stackSolar = 4
+        bodyToSolarPanel = 40
+        glPushMatrix()
+        glTranslatef(self.heightBody//3,self.heightBody//2 ,self.heightBody//2+outterSolar)
+        glScalef(1,1,1);
+        glRotate(90, 0, 0, 1)
+        glRotate(90, 1, 0, 0)
+        glRotate(45, 0, 0, 1)
+        glEnable(GL_TEXTURE_2D)
+        textureID = glGenTextures(1)
+        glBindTexture(GL_TEXTURE_2D, textureID)
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
+        glTexImage2D(GL_TEXTURE_2D,
+                        0,
+                        GL_RGB,
+                        self.solarPanelImg.get_width(),
+                        self.solarPanelImg.get_height(),
+                        0,
+                        GL_RGB,
+                        GL_UNSIGNED_BYTE,
+                        self.solarPanelImgString)
+        gluDisk(self.quad, innerSolar, outterSolar, sliceSolar, stackSolar  )
+        glDisable(GL_TEXTURE_2D)
+        glPopMatrix()
+
+    def makeSolarPanelRight5(self):
+        innerSolar = 0
+        outterSolar = 40
+        sliceSolar = 4
+        stackSolar = 4
+        bodyToSolarPanel = 40
+        glPushMatrix()
+        glTranslatef(self.heightBody//3,self.heightBody//2 ,(self.heightBody//2+outterSolar))
+        glScalef(1,1,1);
+        glRotate(90, 0, 0, 1)
+        glRotate(90, 1, 0, 0)
+        glRotate(45, 0, 0, 1)
+        glEnable(GL_TEXTURE_2D)
+        textureID = glGenTextures(1)
+        glBindTexture(GL_TEXTURE_2D, textureID)
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
+        glTexImage2D(GL_TEXTURE_2D,
+                        0,
+                        GL_RGB,
+                        self.solarPanelImg.get_width(),
+                        self.solarPanelImg.get_height(),
+                        0,
+                        GL_RGB,
+                        GL_UNSIGNED_BYTE,
+                        self.solarPanelImgString)
+        gluDisk(self.quad, innerSolar, outterSolar, sliceSolar, stackSolar  )
+        glDisable(GL_TEXTURE_2D)
+        glPopMatrix()
+
+    def makeSolarPanelLeft6(self):
+        innerSolar = 0
+        outterSolar = 40
+        sliceSolar = 4
+        stackSolar = 4
+        bodyToSolarPanel = 40
+        glPushMatrix()
+        glTranslatef(self.radiusBody,self.heightBody//2 ,self.heightBody//2)
+        glScalef(1,1,1);
+        glRotate(45, 0, 0, 1)
+        glEnable(GL_TEXTURE_2D)
+        textureID = glGenTextures(1)
+        glBindTexture(GL_TEXTURE_2D, textureID)
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
+        glTexImage2D(GL_TEXTURE_2D,
+                        0,
+                        GL_RGB,
+                        self.solarPanelImg.get_width(),
+                        self.solarPanelImg.get_height(),
+                        0,
+                        GL_RGB,
+                        GL_UNSIGNED_BYTE,
+                        self.solarPanelImgString)
+        gluDisk(self.quad, innerSolar, outterSolar, sliceSolar, stackSolar  )
+        glDisable(GL_TEXTURE_2D)
+        glPopMatrix()
+
+    def makeSolarPanelRight6(self):
+        innerSolar = 0
+        outterSolar = 40
+        sliceSolar = 4
+        stackSolar = 4
+        bodyToSolarPanel = 40
+        glPushMatrix()
+        glTranslatef(self.radiusBody,self.heightBody//2 ,self.heightBody//2)
         glScalef(1,1,1);
         glRotate(45, 0, 0, 1)
         glEnable(GL_TEXTURE_2D)
@@ -157,10 +394,31 @@ class iss(satellite):
     def makeBody(self):
         self.makeBody1()
         self.makeBody2()
+        self.makeBody3()
 
     def makeBody1(self):
         glPushMatrix()
-        glTranslatef(0,self.heightBody//4 ,self.heightBody)
+        glEnable(GL_TEXTURE_2D)
+        textureID = glGenTextures(1)
+        glBindTexture(GL_TEXTURE_2D, textureID)
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
+        glTexImage2D(GL_TEXTURE_2D,
+                        0,
+                        GL_RGB,
+                        self.spaceshipImg2.get_width(),
+                        self.spaceshipImg2.get_height(),
+                        0,
+                        GL_RGB,
+                        GL_UNSIGNED_BYTE,
+                        self.spaceshipImgString2)
+        gluCylinder(self.quad, self.radiusBody, self.radiusBody, self.heightBody, self.quadSlice, self.quadStack)
+        glDisable(GL_TEXTURE_2D)
+        glPopMatrix()
+
+    def makeBody2(self):
+        radius = self.radiusBody-2
+        glPushMatrix()
+        glTranslatef(self.radiusBody,self.heightBody//2 ,self.heightBody//2)
         glScalef(1,1,1);
         glRotate(90, 1, 0, 0)
         glEnable(GL_TEXTURE_2D)
@@ -170,18 +428,22 @@ class iss(satellite):
         glTexImage2D(GL_TEXTURE_2D,
                         0,
                         GL_RGB,
-                        self.spaceshipImg.get_width(),
-                        self.spaceshipImg.get_height(),
+                        self.spaceshipImg1.get_width(),
+                        self.spaceshipImg1.get_height(),
                         0,
                         GL_RGB,
                         GL_UNSIGNED_BYTE,
-                        self.spaceshipImgString)
-        gluCylinder(self.quad, self.radiusBody, self.radiusBody, self.heightBody//2, self.quadSlice, self.quadStack)
+                        self.spaceshipImgString1)
+        gluCylinder(self.quad, radius, radius, self.heightBody//2+30, self.quadSlice, self.quadStack)
         glDisable(GL_TEXTURE_2D)
         glPopMatrix()
 
-    def makeBody2(self):
+    def makeBody3(self):
+        radius = self.radiusBody-5
         glPushMatrix()
+        glTranslatef(self.radiusBody,self.heightBody//2 ,self.heightBody//2)
+        glScalef(1,1,1);
+        glRotate(90, 0, 1, 0)
         glEnable(GL_TEXTURE_2D)
         textureID = glGenTextures(1)
         glBindTexture(GL_TEXTURE_2D, textureID)
@@ -189,12 +451,12 @@ class iss(satellite):
         glTexImage2D(GL_TEXTURE_2D,
                         0,
                         GL_RGB,
-                        self.spaceshipImg.get_width(),
-                        self.spaceshipImg.get_height(),
+                        self.spaceshipImg3.get_width(),
+                        self.spaceshipImg3.get_height(),
                         0,
                         GL_RGB,
                         GL_UNSIGNED_BYTE,
-                        self.spaceshipImgString)
-        gluCylinder(self.quad, self.radiusBody, self.radiusBody, self.heightBody, self.quadSlice, self.quadStack)
+                        self.spaceshipImgString3)
+        gluCylinder(self.quad, radius, radius, self.heightBody//3, self.quadSlice, self.quadStack)
         glDisable(GL_TEXTURE_2D)
         glPopMatrix()
