@@ -8,7 +8,7 @@ from OpenGL.GLUT import *
 from OpenGL.GLU import *
 
 #initialize and calculate some variable setup
-glutInit(sys.argv)
+#glutInit(sys.argv)
 pygame.init()
 displayInfo = pygame.display.Info() #get resolution size of screen
 width = displayInfo.current_w
@@ -157,6 +157,10 @@ def keyboardHandler(mode):
     elif mode == 11:
         if mySolarSystem.getFramePerDay() > 1:
             mySolarSystem.setFramePerDay(mySolarSystem.getFramePerDay() - 1)
+    elif mode == 14:
+        mySolarSystem.toggleOribitalPath()
+    elif mode == 15:
+        mySolarSystem.toggleName()
 
 
 #Key Definition
@@ -174,6 +178,8 @@ def keyboardHandler(mode):
 #S Decrease Frame Per day
 #Q Time step Foward
 #W Time step Backward
+#P Show/Hide Orbital Path
+#N Show/Hide Name
 #Event watch dog
 while running:
     clock.tick(FPS)
@@ -216,6 +222,10 @@ while running:
             keyboardHandler(6)
         if pressed[pygame.K_4]:
             keyboardHandler(7)
+        if pressed[pygame.K_p]:
+            keyboardHandler(14)
+        if pressed[pygame.K_n]:
+            keyboardHandler(15)
         if event.type == pygame.QUIT:
             running = False
             pygame.quit()
@@ -223,3 +233,9 @@ while running:
             if event.key == pygame.K_ESCAPE:
                 running = False
                 pygame.quit()
+
+    
+    
+    
+    
+                
