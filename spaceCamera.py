@@ -25,6 +25,7 @@ class spaceCamera:
         self.selectedObject = 0
         self.cameraXYTheta = 0
         self.cameraXZTheta = 0
+        self.earthID = 1
         
         glLoadIdentity()
         gluPerspective(self.viewAngle, self.aspectRatio, self.zNear, self.zFar)
@@ -127,7 +128,15 @@ class spaceCamera:
         elif self.cameraMode == 1:
             print("Satellite to Earth")
         elif self.cameraMode == 2:
-            print("Fixed on Earth")
+            earthRadius = self.spaceObjectList[self.earthID].getRadiusDraw()
+            earthPosition = self.spaceObjectList[self.earthID].getPosition()
+            currentPosition = self.spaceObjectList[self.selectedObject].getPosition()
+            self.eyeCamera[0] = earthPosition[0] + earthRadius
+            self.eyeCamera[1] = earthPosition[1]
+            self.eyeCamera[2] = earthPosition[2]
+            self.centerCamera[0] = currentPosition[0]
+            self.centerCamera[1] = currentPosition[1]
+            self.centerCamera[2] = currentPosition[2]
         
         glLoadIdentity()
         gluPerspective(self.viewAngle, self.aspectRatio, self.zNear, self.zFar)

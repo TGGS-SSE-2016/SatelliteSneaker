@@ -25,6 +25,10 @@ except NameError:
 
 class satellite(spaceObject):
 
+    #Class Variable
+    #Satellite variable
+    distanceFromEarth = 3578 #original 35780
+
     #Constructor
     def __init__(self):
         super(satellite, self).__init__()        
@@ -34,10 +38,11 @@ class satellite(spaceObject):
                              'file':  'tle.txt',
                             },
                            ]
-        self.saveSatellite = ""
+        self.saveSatellite = self.processTLEdata(self.tleSource)
         self.lattitude = 0
         self.longtitude = 0
         self.home = ephem.Observer()
+        self.drawScale = 0
 
     def getTLE(self,id):
         return None
@@ -45,17 +50,27 @@ class satellite(spaceObject):
     def getALT(self, id):
         satelligeInfo = self.saveSatellite[id]
         self.home.date = datetime.utcnow()
-        satelligeInfo['body'].compute(home)
+        satelligeInfo['body'].compute(self.home)
         alt = satelligeInfo['body']
-
         return alt
+    
+    def getDrawScale(self):
+        return self.drawScale
 
-
-    def convertToXYZ(self, alt):
-        return None
+    def convertToXYZ(self, alt, earthPosition):
+        xyzPosition = []
+        xyTheta = alt.sublat / ephem.degree
+        xzTheta = alt.sublong / ephem.degree
+        xyzPosition.append(earthPosition[0] + satellite.distanceFromEarth * self.drawScale * math.cos(xyTheta * math.pi / 180) * math.cos(xzTheta * math.pi / 180))
+        xyzPosition.append(earthPosition[1] + satellite.distanceFromEarth * self.drawScale * math.sin(xyTheta * math.pi / 180) * math.cos(xzTheta * math.pi / 180))
+        xyzPosition.append(earthPosition[2] + satellite.distanceFromEarth * self.drawScale * math.sin(xzTheta * math.pi / 180))
+        return xyzPosition
 
     def setTLE(self, newTLE=None):
         self.saveSatellite =  self.processTLEdata(self.tleSource)
+        
+    def setDrawScale(self, scale):
+        self.drawScale = scale
 
     def readTLEFile(self, source):
         ''' Read a TLE file (unzip if necessary) '''
@@ -76,7 +91,7 @@ class satellite(spaceObject):
         sats = []
         for source in tleSource:
             print("Processing {}".format(source['name']))
-            tempContent = self.readTLEfile(source=source)
+            tempContent = self.readTLEFile(source=source)
             print()
             if tempContent:
                 i_name = 0
@@ -100,7 +115,6 @@ class satellite(spaceObject):
                         sats.append({'name': name,
                                      'number': number,
                                      'designator': designator,
-                                     'color': source['color'],
                                      'body': body, })
                     i_name += 1
         return sats
