@@ -64,6 +64,8 @@ class satellite(spaceObject):
         xyzPosition.append(earthPosition[0] + satellite.distanceFromEarth * self.drawScale * math.cos(xyTheta * math.pi / 180) * math.cos(xzTheta * math.pi / 180))
         xyzPosition.append(earthPosition[1] + satellite.distanceFromEarth * self.drawScale * math.sin(xyTheta * math.pi / 180) * math.cos(xzTheta * math.pi / 180))
         xyzPosition.append(earthPosition[2] + satellite.distanceFromEarth * self.drawScale * math.sin(xzTheta * math.pi / 180))
+        print(alt.sublat)
+        print(alt.sublong)
         return xyzPosition
 
     def setTLE(self, newTLE=None):

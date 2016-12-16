@@ -15,7 +15,7 @@ width = displayInfo.current_w
 height = displayInfo.current_h
 running = True
 clock = pygame.time.Clock()
-FPS = 60
+FPS = 30
 cameraXZMaxTheta = 89
 cameraXZMinTheta = -89
 maxCameraMode = 3 #0-2
@@ -109,7 +109,7 @@ glEnable(GL_LIGHT0)
 glEnable(GL_LIGHTING)
 
 #Camera Setting
-allSpaceObject = [mySolarSystem.getSun(), mySolarSystem.getEarth(), mySolarSystem.getMoon(), mySolarSystem.getThaicom()]
+allSpaceObject = [mySolarSystem.getSun(), mySolarSystem.getEarth(), mySolarSystem.getMoon(), mySolarSystem.getThaicom(), mySolarSystem.getISS(), mySolarSystem.getTheos()]
 cameraObject = spaceCamera(60, (width/height), 1, height*2, height, 0, allSpaceObject)
 
 #Keyboard Handler

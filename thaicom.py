@@ -9,7 +9,7 @@ class thaicom(satellite):
 
     #Class Variable
     solarFile = "texture/solarpanelmap.jpg"
-    bodyFile = "texture/spaceshipmap.jpg"
+    bodyFile = "texture/spaceshipmap1.jpg"
 
     #Constructor
     def __init__(self, scale):

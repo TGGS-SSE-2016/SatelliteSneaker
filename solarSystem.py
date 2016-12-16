@@ -79,6 +79,12 @@ class solarSystem:
         
     def getThaicom(self):
         return self.thaicomSat
+    
+    def getISS(self):
+        return self.iss
+        
+    def getTheos(self):
+        return self.theos
 
     #Setter Method
     def setFramePerDay(self, frameDay):
